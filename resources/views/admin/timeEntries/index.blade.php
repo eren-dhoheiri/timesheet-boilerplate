@@ -35,7 +35,8 @@
                             {{ trans('cruds.timeEntry.fields.time_end') }}
                         </th>
                         <th>
-                            &nbsp;
+                            <!-- &nbsp; -->
+                            Actions
                         </th>
                     </tr>
                 </thead>
@@ -137,5 +138,12 @@
     });
 })
 
+</script>
+<script>
+    var msg = '{{Session::get('alert')}}';
+    var exist = '{{Session::has('alert')}}';
+    if(exist){
+      alert(msg);
+    }
 </script>
 @endsection

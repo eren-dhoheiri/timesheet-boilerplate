@@ -42,6 +42,8 @@
                     </div>
                 @endif
                 <span class="help-block">{{ trans('cruds.timeEntry.fields.time_end_helper') }}</span>
+                <br />
+                <span class="help-block text-danger">* Hanya bisa memasukkan minimal seminggu sebelum hari ini.</span>
             </div>
             <div class="form-group">
                 <button class="btn btn-danger" type="submit">
@@ -51,7 +53,13 @@
         </form>
     </div>
 </div>
-
+<script>
+    var msg = '{{Session::get('alert')}}';
+    var exist = '{{Session::has('alert')}}';
+    if(exist){
+      alert(msg);
+    }
+</script>
 
 
 @endsection

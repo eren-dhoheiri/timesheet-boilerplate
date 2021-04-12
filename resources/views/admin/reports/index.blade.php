@@ -1,11 +1,12 @@
 @extends('layouts.admin')
 @section('content')
+
 <div class="card">
     <div class="card-header">
         Reports
     </div>
 
-    <div class="card-body">
+    <div class="card-body" style="height: 80vh">
         @if(auth()->user()->is_admin)
             <form>
                 <div class="form-group">
@@ -21,12 +22,14 @@
         @endif
         @if ((!auth()->user()->is_admin || request()->input('employee')) && ($timeEntries))
             <div class="row">
-                <div class="{{ $chart->options['column_class'] }}">
-                    <h3>{!! $chart->options['chart_title'] !!}</h3>
-                    {!! $chart->renderHtml() !!}
+                <div class="col-md-12">
+                    <!-- <div class="{{ $chart->options['column_class'] }}"> -->
+                        <h3 class="text-center">{!! $chart->options['chart_title'] !!}</h3>
+                        {!! $chart->renderHtml() !!}
+                    <!-- </div> -->
                 </div>
 
-                <div class="col-md-4">
+                <div class="col-md-12">
                     <div class="table-responsive">
                         <table class="table table-bordered table-striped table-hover">
                             <thead>
@@ -40,7 +43,8 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach($dateRange as $date)
+                                @foreach($dateRange as $count => $date)
+                                    @if($count < 7)
                                     <tr>
                                         <td>
                                             {{ $date }}
@@ -49,6 +53,7 @@
                                             {{ gmdate("H:i:s", $timeEntries[$date] ?? 0) }}
                                         </td>
                                     </tr>
+                                    @endif
                                 @endforeach
                             </tbody>
                         </table>

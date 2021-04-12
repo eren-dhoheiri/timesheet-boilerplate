@@ -62,7 +62,7 @@
                     </a>
                 </li>
             @endcan
-            @if (!auth()->user()->is_admin)
+            <!-- @if (!auth()->user()->is_admin)
             <li class="nav-item" id="timer">
                 <a href="#" class="nav-link">
                     <i class="fa-fw fas fa-clock nav-icon">
@@ -71,7 +71,7 @@
                     <span>Start work</span>
                 </a>
             </li>
-            @endif
+            @endif -->
             <li class="nav-item">
                 <a href="{{ route("admin.reports.index") }}" class="nav-link {{ request()->is('admin/reports') || request()->is('admin/reports/*') ? 'active' : '' }}">
                     <i class="fa-fw fas fa-calendar nav-icon">

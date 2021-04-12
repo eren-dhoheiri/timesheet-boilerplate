@@ -12,6 +12,7 @@ use Gate;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
+
 class TimeEntriesController extends Controller
 {
     public function index()
@@ -34,9 +35,20 @@ class TimeEntriesController extends Controller
 
     public function store(StoreTimeEntryRequest $request)
     {
-        $timeEntry = TimeEntry::create($request->all());
-
-        return redirect()->route('admin.time-entries.index');
+        // $timeEntry = TimeEntry::create($request->all());
+        
+        
+        // return redirect()->route('admin.time-entries.index');
+        
+        if ($request->get('time_start') < date("Y-m-d H:i:s", strtotime('-7 day'))) {
+            return redirect()->back()->with('alert','Input tidak boleh lebih dari seminggu yang lalu');
+        } elseif ( $request->get('time_start') > date("Y-m-d H:i:s", strtotime('+1 day')) ) {
+            return redirect()->back()->with('alert','Input tidak boleh lebih dari hari ini');
+        }
+        else {
+            $timeEntry = TimeEntry::create($request->all());
+            return redirect()->route('admin.time-entries.index')->with('alert','Berhasil menambah data');
+        }
     }
 
     public function edit(TimeEntry $timeEntry)
@@ -52,9 +64,17 @@ class TimeEntriesController extends Controller
 
     public function update(UpdateTimeEntryRequest $request, TimeEntry $timeEntry)
     {
-        $timeEntry->update($request->all());
-
-        return redirect()->route('admin.time-entries.index');
+        if ($request->get('time_start') < date("Y-m-d H:i:s", strtotime('-7 day'))) {
+            return redirect()->back()->with('alert','Input tidak boleh lebih dari seminggu yang lalu');
+        } elseif ( $request->get('time_start') > date("Y-m-d H:i:s", strtotime('+1 day')) ) {
+            return redirect()->back()->with('alert','Input tidak boleh lebih dari hari ini');
+        }
+        else {
+            $timeEntry->update($request->all());
+            return redirect()->route('admin.time-entries.index')->with('alert','Berhasil update data');
+        }
+        // $timeEntry->update($request->all());
+        // return redirect()->route('admin.time-entries.index');
     }
 
     public function showCurrent()
